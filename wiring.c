@@ -41,12 +41,14 @@ int readMessage(int messageId, char *payload)
 {
     if ( wiringPiSetup() == -1 )
     {
+        printf( "wire setup fail\n" );
         return -1;
     }
 
     float temperature, humidity;
     if (read_dht11_dat(&temperature, &humidity) != 1)
     {
+        printf( "wire read fail\n" );
         return -1;
     }
 
