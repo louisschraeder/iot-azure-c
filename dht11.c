@@ -11,6 +11,25 @@
 #define DHTPIN		7
 int dht11_dat[5] = { 0, 0, 0, 0, 0 };
 
+float two_int_to_float(int vorkomma, int nachkomma)
+{
+    int i, p = 0;
+    float c = 0;
+
+    i = 10E8;
+    while(i > 0)
+    {
+        p = nachkomma / i;
+        if (p > 0)
+            break;
+        i /= 10;
+    }
+
+    c = (float)vorkomma + ((float)nachkomma / (float)(i * 10));
+
+    return c;
+}
+
 int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp)
 {
     uint8_t laststate	= HIGH;
@@ -64,23 +83,4 @@ int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp)
     }else  {
         printf( "Data not good, skip\n" );
     }
-}
-
-float two_int_to_float(int vorkomma, int nachkomma)
-{
-    int i, p = 0;
-    float c = 0;
-
-    i = 10E8;
-    while(i > 0)
-    {
-        p = nachkomma / i;
-        if (p > 0)
-            break;
-        i /= 10;
-    }
-
-    c = (float)vorkomma + ((float)nachkomma / (float)(i * 10));
-
-    return c;
 }
