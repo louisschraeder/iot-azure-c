@@ -16,6 +16,7 @@
 
 #if !SIMULATED_DATA
 #include "./bme280.h"
+#include "./dht11.h"
 
 #define SPI_CHANNEL 0
 #define SPI_CLOCK 1000000L
