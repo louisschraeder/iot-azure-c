@@ -11,7 +11,7 @@
 #define DHTPIN		7
 int dht11_dat[5] = { 0, 0, 0, 0, 0 };
 
-int read_dht11_dat(float * Temp_c__fp, loat * Hum_pct__fp)
+int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp)
 {
     uint8_t laststate	= HIGH;
     uint8_t counter		= 0;
