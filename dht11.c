@@ -77,6 +77,7 @@ int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp)
     {
         *Temp_c__fp = two_int_to_float(dht11_dat[2], dht11_dat[3]);
         *Hum_pct__fp = two_int_to_float(dht11_dat[0], dht11_dat[1]);
+        printf( "Data not good, skip %f, %f\n", Temp_c__fp, Hum_pct__fp );
         printf( "Humidity = %d.%d %% Temperature = %d.%d C \n", dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3]);
         Return_status__i = 1;
     }else  {
