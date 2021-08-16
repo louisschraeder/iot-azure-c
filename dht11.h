@@ -5,6 +5,6 @@
 #ifndef IOT_AZURE_C_DHT11_H
 #define IOT_AZURE_C_DHT11_H
 
-int read_dht11_dat(float & Temp_c__fp, float & Hum_pct__fp);
+int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp);
 
 #endif //IOT_AZURE_C_DHT11_H
