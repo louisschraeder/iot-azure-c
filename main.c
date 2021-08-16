@@ -106,7 +106,7 @@ int deviceMethodCallback(
         unsigned char **response,
         size_t *response_size,
         void *userContextCallback)
-        {
+{
     LogInfo("Try to invoke method %s\r\n", methodName);
     const char *responseMessage = onSuccess;
     int result = 200;
@@ -131,14 +131,13 @@ int deviceMethodCallback(
     strncpy((char *)(*response), responseMessage, *response_size);
 
     return result;
-        }
+}
 
-        void twinCallback(
-                DEVICE_TWIN_UPDATE_STATE updateState,
-                const unsigned char *payLoad,
-                size_t size,
-                void *userContextCallback)
-                {
+void twinCallback(DEVICE_TWIN_UPDATE_STATE updateState,
+                  const unsigned char *payLoad,
+                  size_t size,
+                  void *userContextCallback)
+{
     char *temp = (char *)malloc(size + 1);
     for (int i = 0; i < size; i++)
     {
@@ -164,10 +163,10 @@ int deviceMethodCallback(
     }
     MultiTree_Destroy(tree);
     free(temp);
-                }
+}
 
-                IOTHUBMESSAGE_DISPOSITION_RESULT receiveMessageCallback(IOTHUB_MESSAGE_HANDLE message, void *userContextCallback)
-                {
+IOTHUBMESSAGE_DISPOSITION_RESULT receiveMessageCallback(IOTHUB_MESSAGE_HANDLE message, void *userContextCallback)
+{
     const unsigned char *buffer = NULL;
     size_t size = 0;
 
@@ -191,10 +190,10 @@ int deviceMethodCallback(
     free(temp);
 
     return IOTHUBMESSAGE_ACCEPTED;
-                }
+}
 
-                static char *readFile(char *fileName)
-                {
+static char *readFile(char *fileName)
+{
     FILE *fp;
     int size;
     char *buffer;
@@ -233,10 +232,10 @@ int deviceMethodCallback(
     fclose(fp);
 
     return buffer;
-                }
+}
 
-                static bool setX509Certificate(IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle, char *deviceId)
-                {
+static bool setX509Certificate(IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle, char *deviceId)
+{
     char certName[256];
     char keyName[256];
     char cwd[1024];
@@ -260,10 +259,10 @@ int deviceMethodCallback(
     free(x509privatekey);
 
     return true;
-                }
+}
 
-                char *parse_iothub_name(char *connectionString)
-                {
+char *parse_iothub_name(char *connectionString)
+{
     if (connectionString == NULL)
     {
         return NULL;
@@ -280,14 +279,14 @@ int deviceMethodCallback(
     memcpy(iotHubName, hostName + prefixLen, len - 1);
     iotHubName[len - 1] = '\0';
     return iotHubName;
-                }
+}
 
-                typedef struct AIParams
-                {
+typedef struct AIParams
+{
     char *iotHubName;
     const char *event;
     const char *message;
-                } AIParams;
+} AIParams;
 
 void *send_ai(void *argv)
 {
