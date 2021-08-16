@@ -58,5 +58,5 @@ int readMessage(int messageId, char *payload)
              humidity);
     return temperature > TEMPERATURE_ALERT ? 1 : 0;
 }
-#endif
+//#endif
 
