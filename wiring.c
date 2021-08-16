@@ -45,8 +45,8 @@ int readMessage(int messageId, char *payload)
         return -1;
     }
 
-    float temperature, humidity;
-    if (read_dht11_dat(&temperature, &humidity) != 1)
+    int wert0, wert1, wert2, wert3;
+    if (read_dht11_dat(&wert0, &wert1, &wert2, &wert3) != 1)
     {
         printf( "wire read fail\n" );
         return -1;
@@ -54,11 +54,11 @@ int readMessage(int messageId, char *payload)
 
     snprintf(payload,
              BUFFER_SIZE,
-             "{ \"deviceId\": \"myDevice\", \"messageId\": %d, \"temperature\": %f, \"humidity\": %f }",
+             "{ \"deviceId\": \"myDevice\", \"messageId\": %d, \"temperature\": %d.%d, \"humidity\": %d.%d }",
              messageId,
-             temperature,
-             humidity);
-    return temperature > TEMPERATURE_ALERT ? 1 : 0;
+             wert2, wert3,
+             wert0, wert1);
+    return 0;
 }
 //#endif
 

@@ -49,7 +49,7 @@ float toHum(int vorkomma, int nachkomma)
     return c;
 }
 
-int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp)
+int read_dht11_dat(int * wert0, int * wert1, int * wert2, int * wert3)
 {
     int Return_status__i = 0;
     uint8_t laststate	= HIGH;
@@ -94,10 +94,10 @@ int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp)
     if ( (j >= 40) &&
     (dht11_dat[4] == ( (dht11_dat[0] + dht11_dat[1] + dht11_dat[2] + dht11_dat[3]) & 0xFF) ) )
     {
-        *Temp_c__fp = toTemp(dht11_dat[2], dht11_dat[3]);
-        *Hum_pct__fp = toHum(dht11_dat[0], dht11_dat[1]);
-        printf( "Data not good, skip %f, %f\n", &Temp_c__fp, &Hum_pct__fp );
-        printf( "Humidity = %d.%d %% Temperature = %d.%d C \n", dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3]);
+        *wert0 = dht11_dat[0];
+        *wert1 = dht11_dat[1];
+        *wert2 = dht11_dat[2];
+        *wert3 = dht11_dat[3];
         Return_status__i = 1;
     }else  {
         printf( "Data not good, skip\n" );
