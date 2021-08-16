@@ -32,6 +32,7 @@ float two_int_to_float(int vorkomma, int nachkomma)
 
 int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp)
 {
+    int Return_status__i = 0;
     uint8_t laststate	= HIGH;
     uint8_t counter		= 0;
     uint8_t j		= 0, i;
@@ -76,9 +77,9 @@ int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp)
     {
         *Temp_c__fp = two_int_to_float(dht11_dat[0], dht11_dat[1]);
         *Hum_pct__fp = two_int_to_float(dht11_dat[2], dht11_dat[3]);
-        printf( "Humidity = %d.%d %% Temperature = %d.%d C \n",
-                dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3]);
+        Return_status__i = 1;
     }else  {
         printf( "Data not good, skip\n" );
     }
+    return Return_status__i;
 }
