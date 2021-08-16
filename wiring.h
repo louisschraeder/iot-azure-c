@@ -15,7 +15,6 @@
 #define WIRINGPI_SETUP 1
 
 #if !SIMULATED_DATA
-#include "./bme280.h"
 #include "./dht11.h"
 
 #define SPI_CHANNEL 0
@@ -28,7 +27,5 @@
 #define TEMPERATURE_ALERT 30
 
 int readMessage(int messageId, char *payload);
-void blinkLED();
-void setupWiring();
 
 #endif  // WIRING_H_

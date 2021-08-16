@@ -6,6 +6,7 @@
 
 static unsigned int BMEInitMark = 0;
 
+/*
 #if SIMULATED_DATA
 float random(int min, int max)
 {
@@ -26,12 +27,15 @@ int readMessage(int messageId, char *payload)
 }
 
 #else
+*/
+
+
 int mask_check(int check, int mask)
 {
     return (check & mask) == mask;
 }
 
-// check the BMEInitMark value is equal to the (WIRINGPI_SETUP | SPI_SETUP | BME_INIT)
+
 
 int readMessage(int messageId, char *payload)
 {
@@ -43,7 +47,7 @@ int readMessage(int messageId, char *payload)
 
     snprintf(payload,
              BUFFER_SIZE,
-             "{ \"deviceId\": \"Raspberry Pi - C\", \"messageId\": %d, \"temperature\": %f, \"humidity\": %f }",
+             "{ \"deviceId\": \"myDevice\", \"messageId\": %d, \"temperature\": %f, \"humidity\": %f }",
              messageId,
              temperature,
              humidity);
