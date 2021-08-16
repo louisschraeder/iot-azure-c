@@ -34,7 +34,7 @@ static void sendCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void *userCon
 {
     if (IOTHUB_CLIENT_CONFIRMATION_OK == result)
     {
-        blinkLED();
+
     }
     else
     {
@@ -321,8 +321,6 @@ int main(int argc, char *argv[])
         send_telemetry_data(NULL, EVENT_FAILED, "Device connection string is not provided");
         return 1;
     }
-
-    setupWiring();
 
     char device_id[257];
     char *device_id_src = get_device_id(argv[1]);
