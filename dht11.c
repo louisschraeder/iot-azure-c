@@ -11,7 +11,26 @@
 #define DHTPIN		7
 int dht11_dat[5] = { 0, 0, 0, 0, 0 };
 
-float two_int_to_float(int vorkomma, int nachkomma)
+float toTemp(int vorkomma, int nachkomma)
+{
+    int i, p = 0;
+    float c = 0;
+
+    i = 10E8;
+    while(i > 0)
+    {
+        p = nachkomma / i;
+        if (p > 0)
+            break;
+        i /= 10;
+    }
+
+    c = (float)vorkomma + ((float)nachkomma / (float)(i * 10));
+
+    return c;
+}
+
+float toHum(int vorkomma, int nachkomma)
 {
     int i, p = 0;
     float c = 0;
@@ -75,8 +94,8 @@ int read_dht11_dat(float * Temp_c__fp, float * Hum_pct__fp)
     if ( (j >= 40) &&
     (dht11_dat[4] == ( (dht11_dat[0] + dht11_dat[1] + dht11_dat[2] + dht11_dat[3]) & 0xFF) ) )
     {
-        *Temp_c__fp = two_int_to_float(dht11_dat[2], dht11_dat[3]);
-        *Hum_pct__fp = two_int_to_float(dht11_dat[0], dht11_dat[1]);
+        *Temp_c__fp = toTemp(dht11_dat[2], dht11_dat[3]);
+        *Hum_pct__fp = toHum(dht11_dat[0], dht11_dat[1]);
         printf( "Data not good, skip %f, %f\n", &Temp_c__fp, &Hum_pct__fp );
         printf( "Humidity = %d.%d %% Temperature = %d.%d C \n", dht11_dat[0], dht11_dat[1], dht11_dat[2], dht11_dat[3]);
         Return_status__i = 1;

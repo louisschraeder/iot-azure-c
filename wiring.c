@@ -46,7 +46,7 @@ int readMessage(int messageId, char *payload)
     }
 
     float temperature, humidity;
-    if (read_dht11_dat(temperature, humidity) != 1)
+    if (read_dht11_dat(&temperature, &humidity) != 1)
     {
         printf( "wire read fail\n" );
         return -1;
