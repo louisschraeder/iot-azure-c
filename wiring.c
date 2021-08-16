@@ -39,6 +39,11 @@ int mask_check(int check, int mask)
 
 int readMessage(int messageId, char *payload)
 {
+    if ( wiringPiSetup() == -1 )
+    {
+        return -1;
+    }
+
     float temperature, humidity;
     if (read_dht11_dat(&temperature, &humidity) != 1)
     {
