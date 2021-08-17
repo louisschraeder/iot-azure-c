@@ -14,9 +14,9 @@
 int readEarth()
 {
     int value = 0;
-
+    printf("1");
     pinMode(gpioEarth, INPUT);
-
+    printf("2");
     while(1)
     {
         if (digitalRead(gpioEarth))
@@ -30,7 +30,7 @@ int readEarth()
         //value = digitalRead(gpioEarth);
 
         //printf( "Earth: %d\n", value);
-
+        printf("3");
         delay (1000) ;
     }
 
