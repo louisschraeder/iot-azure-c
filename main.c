@@ -383,7 +383,7 @@ int main(int argc, char *argv[])
                         int result = readMessage(count, buffer);
                         if (result != -1)
                         {
-                            sendMessages(iotHubClientHandle, buffer, result);
+                            //sendMessages(iotHubClientHandle, buffer, result);
                         }
                         else
                         {

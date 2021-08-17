@@ -24,9 +24,12 @@ int readEarth()
 
     for(;;)
     {
-        value = analogRead(gpioEarth);
+        if (gpio_lev & (1<<7))
+            printf( "high: %d\n");
+        else
+            printf( "low: %d\n");
 
-        printf( "Earth: %d\n", value);
+        //printf( "Earth: %d\n", value);
 
         delay (1000) ;
     }
