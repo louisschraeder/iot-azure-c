@@ -20,7 +20,7 @@ int readEarth()
 
     for(;;)
     {
-        if (digitalRead(butPin))
+        if (digitalRead(gpioEarth))
         {
             printf("nass");
         }
