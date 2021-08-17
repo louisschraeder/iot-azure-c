@@ -15,18 +15,22 @@ int readEarth()
 {
     int value = 0;
 
-    pinMode( gpioEarth, OUTPUT );
-    digitalWrite( gpioEarth, LOW );
-    delay( 18 );
-    digitalWrite( gpioEarth, HIGH );
-    delayMicroseconds( 40 );
-    pinMode( gpioEarth, INPUT );
+    wiringPiSetupGpio();
+    pinMode(gpioEarth, INPUT);
 
     for(;;)
     {
-        value = digitalRead(gpioEarth);
+        if (digitalRead(butPin))
+        {
+            printf("nass");
+        }
+        else
+        {
+            printf("trocken");
+        }
+        //value = digitalRead(gpioEarth);
 
-        printf( "Earth: %d\n", value);
+        //printf( "Earth: %d\n", value);
 
         delay (1000) ;
     }
