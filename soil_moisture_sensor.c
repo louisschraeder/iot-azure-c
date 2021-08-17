@@ -4,7 +4,6 @@
 
 #include "./soil_moisture_sensor.h"
 #include <wiringPi.h>
-#include <wiringPiSPI.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -17,14 +16,11 @@ int readEarth()
     printf("1");
 
     printf("2");
-    while(1)
-    {
-        //value = digitalRead(gpioEarth);
 
-        //printf( "Earth: %d\n", value);
-        printf("3");
-        delay (1000) ;
-    }
+    //value = digitalRead(gpioEarth);
+
+    //printf( "Earth: %d\n", value);
+    printf("3");
 
     return 0;
 }

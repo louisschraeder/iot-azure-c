@@ -22,8 +22,9 @@ int readMessage(int messageId, char *payload)
         return -1;
     }
 
+    readEarth();
 
-    int wert0, wert1, wert2, wert3;
+    /*int wert0, wert1, wert2, wert3;
     if (read_dht11_dat(&wert0, &wert1, &wert2, &wert3) != 1)
     {
         printf( "wire read fail\n" );
@@ -35,7 +36,7 @@ int readMessage(int messageId, char *payload)
              "{ \"deviceId\": \"myDevice\", \"messageId\": %d, \"temperature\": %d.%d, \"humidity\": %d.%d }",
              messageId,
              wert2, wert3,
-             wert0, wert1);
+             wert0, wert1);*/
 
 
     return 0;
