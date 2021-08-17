@@ -20,16 +20,11 @@ int readEarth()
         return 1;
     }
 
-    pinMode( gpioEarth, OUTPUT );
-    digitalWrite( gpioEarth, LOW );
-    delay( 18 );
-    digitalWrite( gpioEarth, HIGH );
-    delayMicroseconds( 40 );
     pinMode( gpioEarth, INPUT );
 
     for(;;)
     {
-        value = digitalRead(gpioEarth + 0);
+        value = analogRead(gpioEarth);
 
         printf( "Earth: %d\n", value);
 
