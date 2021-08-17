@@ -13,11 +13,18 @@
 
 int readEarth()
 {
-    uint8_t value = 0;
+    int value = 0;
 
-    value = digitalRead(gpioEarth);
+    wiringPiSetup () ;
 
-    printf( "Earth: %d\n", value );
+    for(;;)
+    {
+        value = analogRead(gpioEarth + 0);
+
+        printf( "Earth: %d\n", value);
+
+        delay (1000) ;
+    }
 
     return 0;
 }
