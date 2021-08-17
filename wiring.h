@@ -17,17 +17,6 @@
 
 #define WIRINGPI_SETUP 1
 
-/*
-#if !SIMULATED_DATA
-
-#define SPI_CHANNEL 0
-#define SPI_CLOCK 1000000L
-
-#define SPI_SETUP 1 << 2
-#define BME_INIT 1 << 3
-#endif
-*/
-
 #define TEMPERATURE_ALERT 30
 
 int readMessage(int messageId, char *payload);

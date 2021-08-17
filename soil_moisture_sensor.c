@@ -9,7 +9,13 @@
 #include <stdio.h>
 #include <string.h>
 
+#define gpioEarth 11
+
 int readEarth()
 {
+    int tmp = 0;
+
+    printf( "Hallo\n" );
+
     return 0;
 }
