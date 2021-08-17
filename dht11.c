@@ -11,43 +11,6 @@
 #define DHTPIN		7
 int dht11_dat[5] = { 0, 0, 0, 0, 0 };
 
-float toTemp(int vorkomma, int nachkomma)
-{
-    int i, p = 0;
-    float c = 0;
-
-    i = 10E8;
-    while(i > 0)
-    {
-        p = nachkomma / i;
-        if (p > 0)
-            break;
-        i /= 10;
-    }
-
-    c = (float)vorkomma + ((float)nachkomma / (float)(i * 10));
-
-    return c;
-}
-
-float toHum(int vorkomma, int nachkomma)
-{
-    int i, p = 0;
-    float c = 0;
-
-    i = 10E8;
-    while(i > 0)
-    {
-        p = nachkomma / i;
-        if (p > 0)
-            break;
-        i /= 10;
-    }
-
-    c = (float)vorkomma + ((float)nachkomma / (float)(i * 10));
-
-    return c;
-}
 
 int read_dht11_dat(int * wert0, int * wert1, int * wert2, int * wert3)
 {
