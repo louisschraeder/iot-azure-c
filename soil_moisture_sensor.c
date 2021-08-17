@@ -15,18 +15,10 @@ int readEarth()
 {
     int value = 0;
     printf("1");
-    pinMode(gpioEarth, INPUT);
+
     printf("2");
     while(1)
     {
-        if (digitalRead(gpioEarth))
-        {
-            printf("nass");
-        }
-        else
-        {
-            printf("trocken");
-        }
         //value = digitalRead(gpioEarth);
 
         //printf( "Earth: %d\n", value);
