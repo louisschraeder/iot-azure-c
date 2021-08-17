@@ -22,10 +22,7 @@ int readMessage(int messageId, char *payload)
         return -1;
     }
 
-    printf( "Hallo\n" );
-    readEarth();
 
-    /*
     int wert0, wert1, wert2, wert3;
     if (read_dht11_dat(&wert0, &wert1, &wert2, &wert3) != 1)
     {
@@ -39,7 +36,7 @@ int readMessage(int messageId, char *payload)
              messageId,
              wert2, wert3,
              wert0, wert1);
-    */
+
 
     return 0;
 }
