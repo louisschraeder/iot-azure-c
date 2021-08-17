@@ -13,9 +13,9 @@
 
 int readEarth()
 {
-    int value = 0;
+    uint8_t value = 0;
 
-    value = analogRead(gpioEarth);
+    value = digitalRead(gpioEarth);
 
     printf( "Earth: %d\n", value );
 
