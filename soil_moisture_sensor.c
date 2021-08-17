@@ -17,7 +17,7 @@ int readEarth()
 
     pinMode(gpioEarth, INPUT);
 
-    for(;;)
+    while(1)
     {
         if (digitalRead(gpioEarth))
         {

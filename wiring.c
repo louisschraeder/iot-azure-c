@@ -26,7 +26,7 @@ int readMessage(int messageId, char *payload)
         printf( "wire setup fail\n" );
         return -1;
     }
-
+    printf( "Hallo\n" );
     readEarth();
 
     /*
