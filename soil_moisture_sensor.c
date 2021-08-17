@@ -15,7 +15,6 @@ int readEarth()
 {
     int value = 0;
 
-    wiringPiSetupGpio();
     pinMode(gpioEarth, INPUT);
 
     for(;;)

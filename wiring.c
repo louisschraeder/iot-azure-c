@@ -21,6 +21,11 @@ int readMessage(int messageId, char *payload)
         printf( "wire setup fail\n" );
         return -1;
     }
+    if ( wiringPiSetupGpio() == -1 )
+    {
+        printf( "wire setup fail\n" );
+        return -1;
+    }
 
     readEarth();
 
