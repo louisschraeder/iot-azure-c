@@ -13,14 +13,10 @@
 int readEarth()
 {
     int value = 0;
-    printf("1");
-
-    printf("2");
 
     //value = digitalRead(gpioEarth);
 
-    //printf( "Earth: %d\n", value);
-    printf("3");
+    printf( "Earth: %d\n", value);
 
     return 0;
 }
