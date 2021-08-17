@@ -15,11 +15,21 @@ int readEarth()
 {
     int value = 0;
 
-    wiringPiSetup () ;
+    if(wiringPiSetup() == -1){
+        printf("setup wiringPi failed !");
+        return 1;
+    }
+
+    pinMode( gpioEarth, OUTPUT );
+    digitalWrite( gpioEarth, LOW );
+    delay( 18 );
+    digitalWrite( gpioEarth, HIGH );
+    delayMicroseconds( 40 );
+    pinMode( gpioEarth, INPUT );
 
     for(;;)
     {
-        value = analogRead(gpioEarth + 0);
+        value = digitalRead(gpioEarth + 0);
 
         printf( "Earth: %d\n", value);
 
