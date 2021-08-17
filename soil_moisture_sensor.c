@@ -15,12 +15,12 @@ int readEarth()
 {
     int value = 0;
 
-    pinMode( DHTPIN, OUTPUT );
-    digitalWrite( DHTPIN, LOW );
+    pinMode( gpioEarth, OUTPUT );
+    digitalWrite( gpioEarth, LOW );
     delay( 18 );
-    digitalWrite( DHTPIN, HIGH );
+    digitalWrite( gpioEarth, HIGH );
     delayMicroseconds( 40 );
-    pinMode( DHTPIN, INPUT );
+    pinMode( gpioEarth, INPUT );
 
     for(;;)
     {
