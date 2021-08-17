@@ -13,9 +13,11 @@
 
 int readEarth()
 {
-    int tmp = 0;
+    int value = 0;
 
-    printf( "Hallo\n" );
+    value = analogRead(gpioEarth);
+
+    printf( "Earth: %d\n", value );
 
     return 0;
 }
