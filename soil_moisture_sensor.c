@@ -24,7 +24,7 @@ int readEarth()
 
     for(;;)
     {
-        if (gpio_lev & (1<<7))
+        if (gpio_lev & (1<<11))
             printf( "high: %d\n");
         else
             printf( "low: %d\n");
