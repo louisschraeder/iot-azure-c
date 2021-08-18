@@ -6,7 +6,8 @@
 #define IOT_AZURE_C_SOIL_MOISTURE_SENSOR_H
 
 
-int readEarth();
+int readEarth(int * earth);
+int readRain(int * rain);
 
 
 #endif //IOT_AZURE_C_SOIL_MOISTURE_SENSOR_H

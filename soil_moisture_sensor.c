@@ -9,6 +9,7 @@
 #include <string.h>
 
 #define gpioEarth 0
+#define gpioRain 2
 
 int readEarth(int * earth)
 {
@@ -16,12 +17,25 @@ int readEarth(int * earth)
 
     if (digitalRead(gpioEarth) == LOW) {
         *earth = 0;
-        delay(200);
     }
     else
     {
         *earth = 1;
-        delay(200);
+    }
+
+    return 0;
+}
+
+int readRain(int * rain)
+{
+    pinMode (gpioRain, INPUT);
+
+    if (digitalRead(gpioRain) == LOW) {
+        *rain = 0;
+    }
+    else
+    {
+        *rain = 1;
     }
 
     return 0;
