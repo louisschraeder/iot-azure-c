@@ -8,18 +8,18 @@
 #include <stdio.h>
 #include <string.h>
 
-#define gpioEarth 11
+#define gpioEarth 0
 
 int readEarth()
 {
-    wiringPiSetupGpio();
+    //wiringPiSetupGpio();
     pinMode (gpioEarth, INPUT);
-    pullUpDnControl(gpioEarth,PUD_UP);
+    //pullUpDnControl(gpioEarth,PUD_UP);
     int value = 0;
 
     //value = digitalRead(gpioEarth);
     while(1) {
-        if (digitalRead(gpioEarth) == LOW) {
+        if (digitalRead(gpioEarth) == HIGH) {
             printf("Button pressed\n");
             delay(200);
         }
