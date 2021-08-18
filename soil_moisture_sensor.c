@@ -19,7 +19,7 @@ int readEarth()
 
     //value = digitalRead(gpioEarth);
     while(1) {
-        if (digitalRead(gpioEarth) == HIGH) {
+        if (digitalRead(gpioEarth) == LOW) {
             printf("Button pressed\n");
             delay(200);
         }
