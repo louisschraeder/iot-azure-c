@@ -12,20 +12,17 @@
 
 int readEarth()
 {
-    //wiringPiSetupGpio();
     pinMode (gpioEarth, INPUT);
-    //pullUpDnControl(gpioEarth,PUD_UP);
-    int value = 0;
 
-    //value = digitalRead(gpioEarth);
-    while(1) {
-        if (digitalRead(gpioEarth) == HIGH) {
-            printf("Button pressed\n");
-            delay(200);
-        }
-        delay(1);
+    if (digitalRead(gpioEarth) == LOW) {
+        printf("trocken\n");
+        delay(200);
     }
-    printf( "Earth: %d\n", value);
+    else
+    {
+        printf("nass\n");
+        delay(200);
+    }
 
     return 0;
 }
