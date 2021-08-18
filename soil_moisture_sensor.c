@@ -10,17 +10,17 @@
 
 #define gpioEarth 0
 
-int readEarth()
+int readEarth(int * earth)
 {
     pinMode (gpioEarth, INPUT);
 
     if (digitalRead(gpioEarth) == LOW) {
-        printf("trocken\n");
+        *earth = 0;
         delay(200);
     }
     else
     {
-        printf("nass\n");
+        *earth = 1;
         delay(200);
     }
 
