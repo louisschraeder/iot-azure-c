@@ -14,11 +14,12 @@ int readEarth()
 {
     wiringPiSetupGpio();
     pinMode (gpioEarth, INPUT);
+    pullUpDnControl(gpioEarth,PUD_UP);
     int value = 0;
 
     //value = digitalRead(gpioEarth);
     while(1) {
-        if (digitalRead(gpioEarth) == LOW) {
+        if (digitalRead(gpioEarth) == HIGH) {
             printf("Button pressed\n");
             delay(200);
         }
