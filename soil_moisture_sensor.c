@@ -3,6 +3,7 @@
 //
 
 #include "./soil_moisture_sensor.h"
+#include <byteswap.h>
 #include <wiringPi.h>
 #include <wiringPiI2C.h>
 #include <stdint.h>

@@ -2,6 +2,9 @@
 // Created by louis on 17.08.2021.
 //
 
+#ifndef IOT_AZURE_C_SOIL_MOISTURE_SENSOR_H
+#define IOT_AZURE_C_SOIL_MOISTURE_SENSOR_H
+
 #define	ADS1115_GAIN_6		0
 #define	ADS1115_GAIN_4		1
 #define	ADS1115_GAIN_2		2
@@ -20,12 +23,10 @@
 #define	ADS1115_DR_475		6
 #define	ADS1115_DR_860		7
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+int readEarth(int * earth);
+int readRain(int * rain);
 
-    extern int ads1115Setup (int pinBase, int i2cAddress) ;
+int ads1115Setup (const int pinBase, int i2cAddr);
 
-#ifdef __cplusplus
-}
-#endif
+
+#endif //IOT_AZURE_C_SOIL_MOISTURE_SENSOR_H
