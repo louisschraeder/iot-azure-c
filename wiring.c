@@ -22,7 +22,7 @@ int readMessage(int messageId, char *payload)
         return -1;
     }
 
-    if(ads1115Setup(1, 48))
+    if(ads1115Setup(1, 0x48))
     {
         printf( "adc setup fail\n" );
         return -1;
