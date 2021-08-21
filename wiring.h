@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <unistd.h>
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
 #include <wiringPiI2C.h>
@@ -16,7 +15,7 @@
 #include "./config.h"
 #include "./dht11.h"
 #include "./soil_moisture_sensor.h"
-#include "./Adafruit_ADS1015.h"
+#include "./ads1115.h"
 
 #define WIRINGPI_SETUP 1
 

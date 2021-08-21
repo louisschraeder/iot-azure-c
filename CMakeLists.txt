@@ -7,7 +7,7 @@ endif()
 include_directories("/usr/local/include/azureiot"
         "/usr/local/include/azureiot/inc/")
 
-set(SOURCE main.c bme280.c wiring.c telemetry.c parson.c config.h bme280.h wiring.h telemetry.h parson.h config.h dht11.c dht11.h soil_moisture_sensor.c soil_moisture_sensor.h Adafruit_ADS1015.cpp Adafruit_ADS1015.h)
+set(SOURCE main.c bme280.c wiring.c telemetry.c parson.c config.h bme280.h wiring.h telemetry.h parson.h config.h dht11.c dht11.h soil_moisture_sensor.c soil_moisture_sensor.h ads1115.c ads1115.h)
 add_executable(app ${SOURCE})
 target_link_libraries(app wiringPi
         serializer
