@@ -30,6 +30,7 @@ int readMessage(int messageId, char *payload)
     ads1115Setup(120,0x48, node);
     analogEarth = myAnalogRead(node, 0);
 
+    printf( "analog: %d0\n",  analogEarth);
 
     int earth, rain;
     readEarth(&earth);
