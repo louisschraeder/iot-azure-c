@@ -40,3 +40,4 @@ int readRain(int * rain)
 
     return 0;
 }
+
