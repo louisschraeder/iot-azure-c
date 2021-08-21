@@ -18,15 +18,13 @@ int mask_check(int check, int mask)
 
 int readMessage(int messageId, char *payload)
 {
-    struct wiringPiNodeStruct *node;
+    readAnalog();
 
     if ( wiringPiSetup() == -1 )
     {
         printf( "wire setup fail\n" );
         return -1;
     }
-
-    ads1115Setup(100,0x48);
 
 
     int earth, rain;
