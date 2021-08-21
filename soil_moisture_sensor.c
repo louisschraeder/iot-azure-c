@@ -100,7 +100,7 @@ static const uint16_t gains [6] =
 
 int readEarth(int * earth)
 {
-    pinMode (gpioEarth, INPUT);
+    /*pinMode (gpioEarth, INPUT);
 
     if (digitalRead(gpioEarth) == LOW) {
         *earth = 0;
@@ -109,6 +109,9 @@ int readEarth(int * earth)
     {
         *earth = 1;
     }
+     */
+
+    earth = myAnalogRead();
 
     return 0;
 }

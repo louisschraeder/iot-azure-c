@@ -22,6 +22,12 @@ int readMessage(int messageId, char *payload)
         return -1;
     }
 
+    if(ads1115Setup(1, 48))
+    {
+        printf( "adc setup fail\n" );
+        return -1;
+    }
+
     int earth, rain;
     readEarth(&earth);
     readRain(&rain);
