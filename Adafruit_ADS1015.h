@@ -2,6 +2,14 @@
 // Created by louis on 21.08.2021.
 //
 
+
+//#if ARDUINO >= 100
+// #include "Arduino.h"
+//#else
+// #include "WProgram.h"
+//#endif
+
+//#include <Wire.h>
 #include <stdint.h>
 #include <stdio.h>
 

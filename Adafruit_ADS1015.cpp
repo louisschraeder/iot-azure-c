@@ -2,9 +2,17 @@
 // Created by louis on 21.08.2021.
 //
 
-#include "./Adafruit_ADS1115.h"
+//#if ARDUINO >= 100
+// #include "Arduino.h"
+//#else
+// #include "WProgram.h"
+//#endif
+//
+//#include <Wire.h>
 #include <unistd.h>
 #include <wiringPiI2C.h>
+
+#include "Adafruit_ADS1015.h"
 
 /**************************************************************************/
 /*!
