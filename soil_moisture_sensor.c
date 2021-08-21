@@ -222,8 +222,6 @@ int ads1115Setup (const int pinBase, int i2cAddr)
     node->data0        = CONFIG_PGA_4_096V ;	// Gain in data0
     node->data1        = CONFIG_DR_128SPS ;	// Samples/sec in data1
     node->analogRead   = myAnalogRead ;
-    node->analogWrite  = myAnalogWrite ;
-    node->digitalWrite = myDigitalWrite ;
 
     return TRUE ;
 }
