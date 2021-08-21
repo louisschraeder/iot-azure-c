@@ -1,0 +1,8 @@
+//
+// Created by louis on 21.08.2021.
+//
+
+#ifndef IOT_AZURE_C_ADAFRUIT_ADS1115_H
+#define IOT_AZURE_C_ADAFRUIT_ADS1115_H
+
+#endif //IOT_AZURE_C_ADAFRUIT_ADS1115_H

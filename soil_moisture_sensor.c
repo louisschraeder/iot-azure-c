@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#define gpioEarth 0
+#define gpioRain 2
 
 int readEarth(int * earth)
 {
