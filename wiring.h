@@ -10,10 +10,12 @@
 #include <stdint.h>
 #include <wiringPi.h>
 #include <wiringPiSPI.h>
+#include <wiringPiI2C.h>
 
 #include "./config.h"
 #include "./dht11.h"
 #include "./soil_moisture_sensor.h"
+#include "./Adafruit_ADS1115.h"
 
 #define WIRINGPI_SETUP 1
 
