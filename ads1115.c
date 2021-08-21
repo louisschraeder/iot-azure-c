@@ -52,7 +52,7 @@ void readAnalog()
     // Select configuration register(0x01)
     // AINP = AIN0 and AINN = AIN3, +/- 2.048V
     // Continuous conversion mode, 128 SPS(0x84, 0x83)
-    char config[3] = {0};
+    config[3] = {0};
     config[0] = 0x01;
     config[1] = 0x94;
     config[2] = 0x83;
@@ -61,9 +61,9 @@ void readAnalog()
 
     // Read 2 bytes of data from register(0x00)
     // raw_adc msb, raw_adc lsb
-    char reg[1] = {0x00};
+    reg[1] = {0x00};
     write(file, reg, 1);
-    char data[2]={0};
+    data[2]={0};
     if(read(file, data, 2) != 2)
     {
         printf("Error : Input/Output Error \n");
@@ -84,7 +84,7 @@ void readAnalog()
     // Select configuration register(0x01)
     // AINP = AIN1 and AINN = AIN3, +/- 2.048V
     // Continuous conversion mode, 128 SPS(0x84, 0x83)
-    char config[3] = {0};
+    config[3] = {0};
     config[0] = 0x01;
     config[1] = 0xA4;
     config[2] = 0x83;
@@ -93,9 +93,9 @@ void readAnalog()
 
     // Read 2 bytes of data from register(0x00)
     // raw_adc msb, raw_adc lsb
-    char reg[1] = {0x00};
+    reg[1] = {0x00};
     write(file, reg, 1);
-    char data[2]={0};
+    data[2]={0};
     if(read(file, data, 2) != 2)
     {
         printf("Error : Input/Output Error \n");
@@ -116,7 +116,7 @@ void readAnalog()
     // Select configuration register(0x01)
     // AINP = AIN2 and AINN = AIN3, +/- 2.048V
     // Continuous conversion mode, 128 SPS(0x84, 0x83)
-    char config[3] = {0};
+    config[3] = {0};
     config[0] = 0x01;
     config[1] = 0xB4;
     config[2] = 0x83;
@@ -125,9 +125,9 @@ void readAnalog()
 
     // Read 2 bytes of data from register(0x00)
     // raw_adc msb, raw_adc lsb
-    char reg[1] = {0x00};
+    reg[1] = {0x00};
     write(file, reg, 1);
-    char data[2]={0};
+    data[2]={0};
     if(read(file, data, 2) != 2)
     {
         printf("Error : Input/Output Error \n");
