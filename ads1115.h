@@ -1,9 +1,6 @@
-//
-// Created by louis on 21.08.2021.
-//
+// Constants for some of the internal functions
 
-#ifndef IOT_AZURE_C_ADS1115_H
-#define IOT_AZURE_C_ADS1115_H
+//	Gain
 
 #define	ADS1115_GAIN_6		0
 #define	ADS1115_GAIN_4		1
@@ -23,10 +20,12 @@
 #define	ADS1115_DR_475		6
 #define	ADS1115_DR_860		7
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-static int myAnalogRead (struct wiringPiNodeStruct *node, int pin);
-static void myDigitalWrite(struct wiringPiNodeStruct *node, int pin, int data);
-static void myAnalogWrite(struct wiringPiNodeStruct *node, int pin, int data);
-int ads1115Setup(const int pinBase, int i2cAddr, struct wiringPiNodeStruct *node);
+    extern int ads1115Setup (int pinBase, int i2cAddress) ;
 
-#endif //IOT_AZURE_C_ADS1115_H
+#ifdef __cplusplus
+}
+#endif

@@ -1,8 +1,21 @@
-//
-// Created by louis on 21.08.2021.
-//
+/*
+ *********************************************************************************
+ * We're going to work in a hybrid mode to fit in with the wiringPi way of
+ * doing things, so there will be 4 analog pin which read the 4 single-ended
+ * channels as usual, also some fake digitalOutputs - these are the control
+ * registers that allow the user to put it into single/diff mode, set the
+ * gain and data rates.
+ *********************************************************************************
+ */
 
-#include "ads1115.h"
+#include <byteswap.h>
+#include <stdio.h>
+#include <stdint.h>
+
+#include <wiringPi.h>
+#include <wiringPiI2C.h>
+
+#include "./ads1115.h"
 
 // Bits in the config register (it's a 16-bit register)
 
@@ -231,7 +244,8 @@ static void myAnalogWrite(struct wiringPiNodeStruct *node, int pin, int data) {
  *********************************************************************************
  */
 
-int ads1115Setup(const int pinBase, int i2cAddr, struct wiringPiNodeStruct *node) {
+int ads1115Setup(const int pinBase, int i2cAddr) {
+    struct wiringPiNodeStruct *node;
     int fd;
 
     if ((fd = wiringPiI2CSetup(i2cAddr)) < 0)
