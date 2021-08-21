@@ -26,7 +26,7 @@ int readMessage(int messageId, char *payload)
         return -1;
     }
 
-    ads1115Setup(120,0x48);
+    ads1115Setup(100,0x48);
 
 
     int earth, rain;
