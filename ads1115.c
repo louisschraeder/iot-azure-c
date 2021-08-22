@@ -120,15 +120,26 @@ int readAnalog(int * earth, int * rain) {
 
     int in_min, in_max, out_min, out_max;
     in_min = 32767;
-    in_max = 10365;
+    in_max = 19365;
     out_min = 0;
     out_max = 100;
 
     int valEarthOut = (valEarth - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+
+    in_min = 32767;
+    in_max = 12811;
+    out_min = 0;
+    out_max = 100;
+
     int valRainOut = (valRain - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 
     //printf("analogEarth Prozent: %d\n", valEarthOut);
     //printf("analogRain Prozent: %d\n", valRainOut);
+    if(valEarthOut > 100)
+        valEarthOut = 100;
+
+    if(valRainOut > 100)
+        valRainOut = 100;
 
     *earth = valEarthOut;
     *rain = valRainOut;
