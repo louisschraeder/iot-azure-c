@@ -18,11 +18,11 @@ int mask_check(int check, int mask)
 
 int readMessage(int messageId, char *payload)
 {
-    /*if ( wiringPiSetup() == -1 )
+    if ( wiringPiSetup() == -1 )
     {
         printf( "wire setup fail\n" );
         return -1;
-    }*/
+    }
 
 
     int wert0, wert1, wert2, wert3;
