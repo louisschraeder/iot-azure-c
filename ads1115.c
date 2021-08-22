@@ -120,14 +120,14 @@ int readAnalog(int * earth, int * rain) {
 
     int in_min, in_max, out_min, out_max;
     in_min = 32767;
-    in_max = 12365;
+    in_max = 10365;
     out_min = 0;
     out_max = 100;
 
     int valEarthOut = (valEarth - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 
     in_min = 32767;
-    in_max = 7811;
+    in_max = 6811;
     out_min = 0;
     out_max = 100;
 
