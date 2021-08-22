@@ -63,6 +63,8 @@ void readAnalog()
             val = 0;
 
         printf("analog: %d\n", val);
+
+        sleep(5);
     }
 
 
