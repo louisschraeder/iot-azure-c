@@ -5,6 +5,6 @@
 #ifndef IOT_AZURE_C_ADS1115_H
 #define IOT_AZURE_C_ADS1115_H
 
-int readAnalog();
+int readAnalog(int * earth, int * rain);
 
 #endif //IOT_AZURE_C_ADS1115_H

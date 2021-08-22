@@ -15,17 +15,17 @@ int16_t valRain;
 uint8_t writeBuf[3];
 uint8_t readBuf[2];
 
-void readAnalog() {
+int readAnalog(int * earth, int * rain) {
     // open device on /dev/i2c-1 the default on Raspberry Pi B
     if ((fd = open("/dev/i2c-1", O_RDWR)) < 0) {
         printf("Error: Couldn't open device! %d\n", fd);
-        exit(1);
+        return -1;
     }
 
     // connect to ADS1115 as i2c slave
     if (ioctl(fd, I2C_SLAVE, asd_address) < 0) {
         printf("Error: Couldn't find device on address!\n");
-        exit(1);
+        return -1;
     }
 
 
@@ -47,7 +47,7 @@ void readAnalog() {
     // begin conversion
     if (write(fd, writeBuf, 3) != 3) {
         perror("Write to register 1");
-        exit(1);
+        return -1;
     }
 
     sleep(1);
@@ -57,13 +57,13 @@ void readAnalog() {
     readBuf[0] = 0;
     if (write(fd, readBuf, 1) != 1) {
         perror("Write register select");
-        exit(-1);
+        return -1;
     }
 
     // read conversion register
     if (read(fd, readBuf, 2) != 2) {
         perror("Read conversion");
-        exit(-1);
+        return -1;
     }
 
     valEarth = readBuf[0] * 256 + readBuf[1];
@@ -81,7 +81,7 @@ void readAnalog() {
     // begin conversion
     if (write(fd, writeBuf, 3) != 3) {
         perror("Write to register 1");
-        exit(1);
+        return -1;
     }
 
     sleep(1);
@@ -91,13 +91,13 @@ void readAnalog() {
     readBuf[0] = 0;
     if (write(fd, readBuf, 1) != 1) {
         perror("Write register select");
-        exit(-1);
+        return -1;
     }
 
     // read conversion register
     if (read(fd, readBuf, 2) != 2) {
         perror("Read conversion");
-        exit(-1);
+        return -1;
     }
 
     valRain = readBuf[0] * 256 + readBuf[1];
@@ -112,10 +112,6 @@ void readAnalog() {
      * Earth:
      * min = 32767
      * max = 10365
-     * diff = -22402
-     *
-     * 100% = -22402
-     * 1% = -224,02
      *
      * Rain:
      * min = 32767
@@ -131,6 +127,11 @@ void readAnalog() {
     int valEarthOut = (valEarth - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     int valRainOut = (valRain - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 
-    printf("analogEarth Prozent: %d\n", valEarthOut);
-    printf("analogRain Prozent: %d\n", valRainOut);
+    //printf("analogEarth Prozent: %d\n", valEarthOut);
+    //printf("analogRain Prozent: %d\n", valRainOut);
+
+    *earth = valEarthOut;
+    *rain = valRainOut;
+
+    return 1;
 }
