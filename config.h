@@ -4,11 +4,8 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-#define INTERVAL 3000
-#define SIMULATED_DATA 0
+#define INTERVAL 500000
 #define BUFFER_SIZE 256
-
-#define LED_PIN 7
 
 #define CREDENTIAL_PATH "~/.iot-hub"
 
