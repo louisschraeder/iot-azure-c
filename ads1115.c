@@ -1,81 +1,51 @@
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <inttypes.h>
 #include <linux/i2c-dev.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
 
-#define ADS_ADDR 0x48
-
-int readAnalog()
+void readAnalog()
 {
-    int fd;                 /* Device-Handle */
-    uint8_t buf[10];        /* I/O buffer */
-    int16_t val;            /* Result (int) */
-
-    /* open device on /dev/i2c-1 */
-    if ((fd = open("/dev/i2c-1", O_RDWR)) < 0)
+    // Create I2C bus
+    int file;
+    char *bus = "/dev/i2c-1";
+    if ((file = open(bus, O_RDWR)) < 0)
     {
-        printf("Error: Couldn't open device! %d\n", fd);
-        return 1;
+        printf("Failed to open the bus. \n");
+        exit(1);
     }
-    /* connect to ads1115 as i2c slave */
-    if (ioctl(fd, I2C_SLAVE, ADS_ADDR) < 0)
+    // Get I2C device, ADS1115 I2C address is 0x48(72)
+    ioctl(file, I2C_SLAVE, 0x48);
+
+    // Select configuration register(0x01)
+    // AINP = AIN0 and AINN = AIN1, +/- 2.048V
+    // Continuous conversion mode, 128 SPS(0x84, 0x83)
+    char config[3] = {0};
+    config[0] = 0x01;
+    config[1] = 0x84;
+    config[2] = 0x83;
+    write(file, config, 3);
+    sleep(1);
+
+    // Read 2 bytes of data from register(0x00)
+    // raw_adc msb, raw_adc lsb
+    char reg[1] = {0x00};
+    write(file, reg, 1);
+    char data[2]={0};
+    if(read(file, data, 2) != 2)
     {
-        printf("Error: Couldn't find device on address!\n");
-        return 1;
+        printf("Error : Input/Output Error \n");
     }
-
-
-    for (;;) // loop forever
+    else
+    {
+        // Convert the data
+        int raw_adc = (data[0] * 256 + data[1]);
+        if (raw_adc > 32767)
         {
-        /* set config register (reg. 1) and start conversion
-         * AIN0 and GND, 4.096 V, 128 samples/s
-         */
-        buf[0] = 1;
-        buf[1] = 0xc3;
-        buf[2] = 0x85;
-        if (write(fd, buf, 3) != 3)
-        {
-            perror("Write to register 1");
-            exit(-1);
+            raw_adc -= 65535;
         }
 
-        /* wait for conversion complete (msb == 0) */
-        do {
-            if (read(fd, buf, 2) != 2)
-            {
-                perror("Read conversion");
-                exit(-1);
-            }
-        } while (!(buf[0] & 0x80));
-
-        /* read conversion register (reg. 0) */
-        buf[0] = 0;
-        if (write(fd, buf, 1) != 1)
-        {
-            perror("Write register select");
-            exit(-1);
-        }
-        if (read(fd, buf, 2) != 2)
-        {
-            perror("Read conversion");
-            exit(-1);
-        }
-
-        /* convert buffer to int value */
-        val = (int16_t)buf[0]*256 + (uint16_t)buf[1];
-
-        /* display results */
-        printf("Hex: 0x%02x%02x - Int: %d - Float, converted: %f V\n",
-               buf[0], buf[1], val, (float)val*4.096/32768.0);
-
-        /* pause 0.5 s */
-        usleep(500000);
-        }
-
-    close(fd);
-    return 0;
+        // Output data to screen
+        printf("Digital Value of Analog Input on AIN0 & AIN1: %d \n", raw_adc);
+    }
 }
