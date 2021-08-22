@@ -99,14 +99,8 @@ int readAnalog() {
         printf("Conversion number %d HEX 0x%02x DEC %d %4.3f volts.\n",
                count, val, val, myfloat);
         // TMP37 20mV per deg C
-        printf("Temp. C = %4.2f \n", myfloat / 0.02);
-        printf("Temp. F = %4.2f \n", myfloat / 0.02 * 9 / 5 + 32);
+        printf("earth = %f \n", myfloat / 0.02);
 
-        /* Output:
-         Conversion number 1 HEX 0x1113 DEC 4371 0.546 volts.
-         Temp. C = 27.32
-         Temp. F = 81.17
-         */
 
         sleep(5);
 
