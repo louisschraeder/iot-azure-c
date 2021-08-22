@@ -38,7 +38,12 @@ void readAnalog()
     }
     else
     {
-        // Convert the data
+        int raw_earth = data[0];
+        int raw_rain = data[1];
+
+        printf("earth: %d, rain: %d \n" , raw_earth, raw_rain);
+
+        /* Convert the data
         int raw_adc = (data[0] * 256 + data[1]);
         if (raw_adc > 32767)
         {
@@ -46,6 +51,6 @@ void readAnalog()
         }
 
         // Output data to screen
-        printf("Digital Value of Analog Input on AIN0 & AIN1: %d \n", raw_adc);
+        printf("Digital Value of Analog Input on AIN0 & AIN1: %d \n", raw_adc); */
     }
 }
