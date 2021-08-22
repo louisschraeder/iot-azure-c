@@ -41,7 +41,7 @@ void readAnalog()
         // Convert the data
         int raw_adc = (data[0] * 256 + data[1]);
 
-        raw_adc = raw_adc + 35000
+        raw_adc = raw_adc + 35000;
 
         // Output data to screen
         printf("Digital Value of Analog Input on AIN0 & AIN1: %d \n", raw_adc);
