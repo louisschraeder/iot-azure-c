@@ -10,7 +10,8 @@
 int fd;
 // Note PCF8591 defaults to 0x48!
 int asd_address = 0x48;
-int16_t val;
+int16_t valEarth;
+int16_t valRain;
 uint8_t writeBuf[3];
 uint8_t readBuf[2];
 
@@ -64,12 +65,11 @@ void readAnalog() {
         exit(-1);
     }
 
-    val = readBuf[0] * 256 + readBuf[1];
+    valEarth = readBuf[0] * 256 + readBuf[1];
 
-    if (val < 0)
-        val = 0;
+    if (valEarth < 0)
+        valEarth = 0;
 
-    printf("analog: %d\n", val);
 
     //------------------------------------------------------------------------------------------------
     //Configuration
@@ -99,11 +99,12 @@ void readAnalog() {
         exit(-1);
     }
 
-    val = readBuf[0] * 256 + readBuf[1];
+    valRain = readBuf[0] * 256 + readBuf[1];
 
-    if (val < 0)
-        val = 0;
+    if (valRain < 0)
+        valRain = 0;
 
-    printf("analog: %d\n", val);
+    printf("analogEarth: %d\n", valEarth);
+    printf("analogRain: %d\n", valRain);
 
 }
