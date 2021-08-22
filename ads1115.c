@@ -14,19 +14,28 @@ int16_t val;
 uint8_t writeBuf[3];
 uint8_t readBuf[2];
 
-void readAnalog()
-{
+void readAnalog() {
     // open device on /dev/i2c-1 the default on Raspberry Pi B
     if ((fd = open("/dev/i2c-1", O_RDWR)) < 0) {
         printf("Error: Couldn't open device! %d\n", fd);
-        exit (1);
+        exit(1);
     }
 
     // connect to ADS1115 as i2c slave
     if (ioctl(fd, I2C_SLAVE, asd_address) < 0) {
         printf("Error: Couldn't find device on address!\n");
-        exit (1);
+        exit(1);
     }
+
+    //------------------------------------------------------------------------------------------------
+    // 0xC2 single shot off
+    // bit 15 flag bit for single shot not used here
+    // Bits 14-12 input selection:
+    // 100 ANC0; 101 ANC1; 110 ANC2; 111 ANC3
+    // Bits 11-9 Amp gain. Default to 010 here 001 P19
+    // Bit 8 Operational mode of the ADS1115.
+    // 0 : Continuous conversion mode
+    // 1 : Power-down single-shot mode (default)
 
     //Configuration
     writeBuf[0] = 1;
@@ -36,7 +45,7 @@ void readAnalog()
     // begin conversion
     if (write(fd, writeBuf, 3) != 3) {
         perror("Write to register 1");
-        exit (1);
+        exit(1);
     }
 
     sleep(1);
@@ -49,54 +58,52 @@ void readAnalog()
         exit(-1);
     }
 
-    while(1)
-    {
-        // read conversion register
-        if (read(fd, readBuf, 2) != 2) {
-            perror("Read conversion");
-            exit(-1);
-        }
-
-        val = readBuf[0] * 256 + readBuf[1];
-
-        if (val < 0)
-            val = 0;
-
-        printf("analog: %d\n", val);
-
-        sleep(5);
+    // read conversion register
+    if (read(fd, readBuf, 2) != 2) {
+        perror("Read conversion");
+        exit(-1);
     }
 
+    val = readBuf[0] * 256 + readBuf[1];
 
-    /* Select configuration register(0x01)
-    // AINP = AIN0 and AINN = AIN3, +/- 2.048V
-    // Continuous conversion mode, 128 SPS(0x84, 0x83)
-    char config2[3] = {0};
-    config2[0] = 0x01;
-    config2[1] = 0x94;
-    config2[2] = 0x83;
-    write(file, config2, 3);
+    if (val < 0)
+        val = 0;
+
+    printf("analog: %d\n", val);
+
+    //------------------------------------------------------------------------------------------------
+    //Configuration
+    writeBuf[0] = 1;
+    writeBuf[1] = 0b11010010;
+    writeBuf[2] = 0b10000101;
+
+    // begin conversion
+    if (write(fd, writeBuf, 3) != 3) {
+        perror("Write to register 1");
+        exit(1);
+    }
+
     sleep(1);
 
 
-
-    // Read 2 bytes of data from register(0x00)
-    // raw_adc msb, raw_adc lsb
-    char reg2[1] = {0x00};
-    write(file, reg2, 1);
-    char data2[2]={0};
-    if(read(file, data2, 2) != 2)
-    {
-        printf("Error : Input/Output Error \n");
+    // set pointer to 0
+    readBuf[0] = 0;
+    if (write(fd, readBuf, 1) != 1) {
+        perror("Write register select");
+        exit(-1);
     }
-    else
-    {
-        // Convert the data
-        raw_adc = (data2[0] * 256 + data2[1]);
 
+    // read conversion register
+    if (read(fd, readBuf, 2) != 2) {
+        perror("Read conversion");
+        exit(-1);
+    }
 
+    val = readBuf[0] * 256 + readBuf[1];
 
-        // Output data to screen
-        printf("Digital Value of Analog Input on AIN0 & AIN3: %d \n", raw_adc);
-    }*/
+    if (val < 0)
+        val = 0;
+
+    printf("analog: %d\n", val);
+
 }

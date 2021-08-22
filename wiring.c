@@ -27,11 +27,6 @@ int readMessage(int messageId, char *payload)
     }
 
 
-    int earth, rain;
-    readEarth(&earth);
-    readRain(&rain);
-
-
     int wert0, wert1, wert2, wert3;
     if (read_dht11_dat(&wert0, &wert1, &wert2, &wert3) != 1)
     {
@@ -44,8 +39,7 @@ int readMessage(int messageId, char *payload)
              "{ \"deviceId\": \"myDevice\", \"messageId\": %d, \"temperature\": %d.%d, \"humidity\": %d.%d, \"earth\": %d, \"rain\": %d }",
              messageId,
              wert2, wert3,
-             wert0, wert1,
-             earth, rain);
+             wert0, wert1);
 
 
     return 0;
