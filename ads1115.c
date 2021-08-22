@@ -40,10 +40,8 @@ void readAnalog()
     {
         // Convert the data
         int raw_adc = (data[0] * 256 + data[1]);
-        if (raw_adc > 32767)
-        {
-            raw_adc -= 65535;
-        }
+
+        raw_adc = raw_adc + 35000
 
         // Output data to screen
         printf("Digital Value of Analog Input on AIN0 & AIN1: %d \n", raw_adc);
@@ -52,30 +50,28 @@ void readAnalog()
     /* Select configuration register(0x01)
     // AINP = AIN0 and AINN = AIN3, +/- 2.048V
     // Continuous conversion mode, 128 SPS(0x84, 0x83)
-    char config[3] = {0};
-    config[0] = 0x01;
-    config[1] = 0x94;
-    config[2] = 0x83;
-    write(file, config, 3);
+    char config2[3] = {0};
+    config2[0] = 0x01;
+    config2[1] = 0x94;
+    config2[2] = 0x83;
+    write(file, config2, 3);
     sleep(1);
 
     // Read 2 bytes of data from register(0x00)
     // raw_adc msb, raw_adc lsb
-    char reg[1] = {0x00};
-    write(file, reg, 1);
-    char data[2]={0};
-    if(read(file, data, 2) != 2)
+    char reg2[1] = {0x00};
+    write(file, reg2, 1);
+    char data2[2]={0};
+    if(read(file, data2, 2) != 2)
     {
         printf("Error : Input/Output Error \n");
     }
     else
     {
         // Convert the data
-        raw_adc = (data[0] * 256 + data[1]);
-        if (raw_adc > 32767)
-        {
-            raw_adc -= 65535;
-        }
+        raw_adc = (data2[0] * 256 + data2[1]);
+
+
 
         // Output data to screen
         printf("Digital Value of Analog Input on AIN0 & AIN3: %d \n", raw_adc);
