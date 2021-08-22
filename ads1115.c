@@ -39,10 +39,11 @@ void readAnalog()
     else
     {
         // Convert the data
-        int raw_adc = (data[0] * 256 + data[1]);
+        int raw_adc = (data[0] * 256);
+        int raw_adc2 = (data[1] * 256);
 
         // Output data to screen
-        printf("Digital Value of Analog Input on AIN0 & AIN1: %d \n", raw_adc);
+        printf("Digital Value of Analog Input on AIN0 & AIN1: %d, %d  \n", raw_adc, raw_adc2);
     }
 
     /* Select configuration register(0x01)
