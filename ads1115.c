@@ -105,8 +105,8 @@ int readAnalog(int * earth, int * rain) {
     if (valRain < 0)
         valRain = 0;
 
-    printf("analogEarth: %d\n", valEarth);
-    printf("analogRain: %d\n", valRain);
+    //printf("analogEarth: %d\n", valEarth);
+    //printf("analogRain: %d\n", valRain);
 
     /**
      * Earth:
