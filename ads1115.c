@@ -1,38 +1,40 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <linux/i2c-dev.h>
-#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <fcntl.h>
+#include <unistd.h>    // read/write usleep
+#include <stdlib.h>    // exit function
+#include <inttypes.h>  // uint8_t, etc
+#include <linux/i2c-dev.h> // I2C bus definitions
 
+int fd;
+// Note PCF8591 defaults to 0x48!
+int asd_address = 0x48;
+int16_t val;
 uint8_t writeBuf[3];
 uint8_t readBuf[2];
 
-int16_t val;
-float myfloat;
-
 void readAnalog()
 {
-    // Create I2C bus
-    int file;
-    char *bus = "/dev/i2c-1";
-    if ((file = open(bus, O_RDWR)) < 0)
-    {
-        printf("Failed to open the bus. \n");
-        exit(1);
+    // open device on /dev/i2c-1 the default on Raspberry Pi B
+    if ((fd = open("/dev/i2c-1", O_RDWR)) < 0) {
+        printf("Error: Couldn't open device! %d\n", fd);
+        exit (1);
     }
 
     // connect to ADS1115 as i2c slave
-    if (ioctl(file, I2C_SLAVE, 0x48) < 0) {
+    if (ioctl(fd, I2C_SLAVE, asd_address) < 0) {
         printf("Error: Couldn't find device on address!\n");
         exit (1);
     }
 
-    writeBuf[0] = 0x01;
-    writeBuf[1] = 0x84;
-    writeBuf[2] = 0x83;
+    //Configuration
+    writeBuf[0] = 1;
+    writeBuf[1] = 0b11000010;
+    writeBuf[2] = 0b10000101;
 
-    if (write(file, writeBuf, 3) != 3) {
-        printf("Write to register 1");
+    // begin conversion
+    if (write(fd, writeBuf, 3) != 3) {
         perror("Write to register 1");
         exit (1);
     }
@@ -40,17 +42,17 @@ void readAnalog()
     sleep(1);
 
 
+    // set pointer to 0
     readBuf[0] = 0;
-    //write(file, reg, 1);
-
-    if (write(file, readBuf, 1) != 1) {
+    if (write(fd, readBuf, 1) != 1) {
         perror("Write register select");
         exit(-1);
     }
 
-    for(;;)
+    while(1)
     {
-        if (read(file, readBuf, 2) != 2) {
+        // read conversion register
+        if (read(fd, readBuf, 2) != 2) {
             perror("Read conversion");
             exit(-1);
         }
