@@ -28,6 +28,7 @@ void readAnalog() {
         exit(1);
     }
 
+
     //------------------------------------------------------------------------------------------------
     // 0xC2 single shot off
     // bit 15 flag bit for single shot not used here
@@ -107,4 +108,29 @@ void readAnalog() {
     printf("analogEarth: %d\n", valEarth);
     printf("analogRain: %d\n", valRain);
 
+    /**
+     * Earth:
+     * min = 32767
+     * max = 10365
+     * diff = -22402
+     *
+     * 100% = -22402
+     * 1% = -224,02
+     *
+     * Rain:
+     * min = 32767
+     * max = 6811
+     * */
+
+    int in_min, in_max, out_min, out_max;
+    in_min = 32767;
+    in_max = 10365;
+    out_min = 0;
+    out_max = 100;
+
+    int valEarthOut = (valEarth - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    int valRainOut = (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+
+    printf("analogEarth Prozent: %d\n", valEarthOut);
+    printf("analogRain Prozent: %d\n", valRainOut);
 }

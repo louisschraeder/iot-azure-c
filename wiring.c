@@ -28,11 +28,11 @@ int readMessage(int messageId, char *payload)
 
 
     int wert0, wert1, wert2, wert3;
-    if (read_dht11_dat(&wert0, &wert1, &wert2, &wert3) != 1)
-    {
-        printf( "wire read fail\n" );
-        return -1;
-    }
+    //if (read_dht11_dat(&wert0, &wert1, &wert2, &wert3) != 1)
+    //{
+    //    printf( "wire read fail\n" );
+    //    return -1;
+    //}
 
     snprintf(payload,
              BUFFER_SIZE,
