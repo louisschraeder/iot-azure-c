@@ -24,18 +24,17 @@ int readMessage(int messageId, char *payload)
         return -1;
     }
 
-
     int wert0, wert1, wert2, wert3;
     if (read_dht11_dat(&wert0, &wert1, &wert2, &wert3) != 1)
     {
-        printf( "wire read fail\n" );
+        printf( "temp read fail\n" );
         return -1;
     }
 
     int earth, rain;
     if (readAnalog(&earth, &rain) != 1)
     {
-        printf( "wire read fail\n" );
+        printf( "earth/rain read fail\n" );
         return -1;
     }
 
