@@ -49,7 +49,7 @@ void readAnalog()
         printf("Digital Value of Analog Input on AIN0 & AIN1: %d \n", raw_adc);
     }
 
-    // Select configuration register(0x01)
+    /* Select configuration register(0x01)
     // AINP = AIN0 and AINN = AIN3, +/- 2.048V
     // Continuous conversion mode, 128 SPS(0x84, 0x83)
     char config[3] = {0};
@@ -79,5 +79,5 @@ void readAnalog()
 
         // Output data to screen
         printf("Digital Value of Analog Input on AIN0 & AIN3: %d \n", raw_adc);
-    }
+    }*/
 }
