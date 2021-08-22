@@ -4,7 +4,7 @@
 #ifndef CONFIG_H_
 #define CONFIG_H_
 
-#define INTERVAL 5000
+#define INTERVAL 500000
 #define BUFFER_SIZE 256
 
 #define CREDENTIAL_PATH "~/.iot-hub"
