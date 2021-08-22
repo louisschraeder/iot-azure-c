@@ -1,124 +1,98 @@
 #include <stdio.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#include <stdlib.h>
+#include <linux/i2c-dev.h>
+#include <sys/ioctl.h>
 #include <fcntl.h>
-#include <unistd.h>    // read/write usleep
-#include <stdlib.h>    // exit function
-#include <inttypes.h>  // uint8_t, etc
-#include <linux/i2c-dev.h> // I2C bus definitions
 
-// Connect ADDR to GRD.
-// Setup to use ADC0 single ended
-
-int fd;
-// Note PCF8591 defaults to 0x48!
-int asd_address = 0x48;
-int16_t val;
 uint8_t writeBuf[3];
 uint8_t readBuf[2];
+
+int16_t val;
 float myfloat;
 
-const float VPS = 4.096 / 32768.0; // volts per step
-
-/*
-The resolution of the ADC in single ended mode
-we have 15 bit rather than 16 bit resolution,
-the 16th bit being the sign of the differential
-reading.
-*/
-
-int readAnalog() {
-
-    // open device on /dev/i2c-1 the default on Raspberry Pi B
-    if ((fd = open("/dev/i2c-1", O_RDWR)) < 0) {
-        printf("Error: Couldn't open device! %d\n", fd);
-        exit (1);
+void readAnalog()
+{
+    // Create I2C bus
+    int file;
+    char *bus = "/dev/i2c-1";
+    if ((file = open(bus, O_RDWR)) < 0)
+    {
+        printf("Failed to open the bus. \n");
+        exit(1);
     }
 
     // connect to ADS1115 as i2c slave
-    if (ioctl(fd, I2C_SLAVE, asd_address) < 0) {
+    if (ioctl(file, I2C_SLAVE, 0x48) < 0) {
         printf("Error: Couldn't find device on address!\n");
         exit (1);
     }
 
-    // set config register and start conversion
-    // AIN0 and GND, 4.096v, 128s/s
-    // Refer to page 19 area of spec sheet
-    writeBuf[0] = 1; // config register is 1
-    writeBuf[1] = 0b11000010; // 0xC2 single shot off
-    // bit 15 flag bit for single shot not used here
-    // Bits 14-12 input selection:
-    // 100 ANC0; 101 ANC1; 110 ANC2; 111 ANC3
-    // Bits 11-9 Amp gain. Default to 010 here 001 P19
-    // Bit 8 Operational mode of the ADS1115.
-    // 0 : Continuous conversion mode
-    // 1 : Power-down single-shot mode (default)
+    writeBuf[0] = 0x01;
+    writeBuf[1] = 0x84;
+    writeBuf[2] = 0x83;
 
-    writeBuf[2] = 0b10000101; // bits 7-0  0x85
-    // Bits 7-5 data rate default to 100 for 128SPS
-    // Bits 4-0  comparator functions see spec sheet.
-
-    // begin conversion
-    if (write(fd, writeBuf, 3) != 3) {
+    if (write(file, writeBuf, 3) != 3) {
+        printf("Write to register 1");
         perror("Write to register 1");
         exit (1);
     }
 
     sleep(1);
 
-    printf("ASD1115 Demo will take five readings.\n");
 
-
-    // set pointer to 0
     readBuf[0] = 0;
-    if (write(fd, readBuf, 1) != 1) {
+    //write(file, reg, 1);
+
+    if (write(file, readBuf, 1) != 1) {
         perror("Write register select");
         exit(-1);
     }
 
-    // take 5 readings:
-
-    int count = 1;
-
-    while (1)   {
-
-        // read conversion register
-        if (read(fd, readBuf, 2) != 2) {
+    for(;;)
+    {
+        if (read(file, readBuf, 2) != 2) {
             perror("Read conversion");
             exit(-1);
         }
 
-        // could also multiply by 256 then add readBuf[1]
-        val = readBuf[0] << 8 | readBuf[1];
+        val = readBuf[0] * 256 + readBuf[1];
 
-        // with +- LSB sometimes generates very low neg number.
-        if (val < 0)   val = 0;
+        if (val < 0)
+            val = 0;
 
-        myfloat = val * VPS; // convert to voltage
-
-        printf("Conversion number %d HEX 0x%02x DEC %d %4.3f volts.\n",
-               count, val, val, myfloat);
-        // TMP37 20mV per deg C
-        printf("earth = %f \n", myfloat / 0.02);
-
-
-        sleep(5);
-
-        count++; // inc count
-        if (count == 6)   break;
-
-    } // end while loop
-
-    // power down ASD1115
-    writeBuf[0] = 1;    // config register is 1
-    writeBuf[1] = 0b11000011; // bit 15-8 0xC3 single shot on
-    writeBuf[2] = 0b10000101; // bits 7-0  0x85
-    if (write(fd, writeBuf, 3) != 3) {
-        perror("Write to register 1");
-        exit (1);
+        printf("analog: %d\n", val);
     }
 
-    close(fd);
 
-    return 0;
+    /* Select configuration register(0x01)
+    // AINP = AIN0 and AINN = AIN3, +/- 2.048V
+    // Continuous conversion mode, 128 SPS(0x84, 0x83)
+    char config2[3] = {0};
+    config2[0] = 0x01;
+    config2[1] = 0x94;
+    config2[2] = 0x83;
+    write(file, config2, 3);
+    sleep(1);
+
+
+
+    // Read 2 bytes of data from register(0x00)
+    // raw_adc msb, raw_adc lsb
+    char reg2[1] = {0x00};
+    write(file, reg2, 1);
+    char data2[2]={0};
+    if(read(file, data2, 2) != 2)
+    {
+        printf("Error : Input/Output Error \n");
+    }
+    else
+    {
+        // Convert the data
+        raw_adc = (data2[0] * 256 + data2[1]);
+
+
+
+        // Output data to screen
+        printf("Digital Value of Analog Input on AIN0 & AIN3: %d \n", raw_adc);
+    }*/
 }
