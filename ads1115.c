@@ -56,6 +56,8 @@ void readAnalog()
     write(file, config2, 3);
     sleep(1);
 
+
+
     // Read 2 bytes of data from register(0x00)
     // raw_adc msb, raw_adc lsb
     char reg2[1] = {0x00};
