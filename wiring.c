@@ -40,7 +40,7 @@ int readMessage(int messageId, char *payload)
 
     snprintf(payload,
              BUFFER_SIZE,
-             "{ \"deviceId\": \"myDevice\", \"messageId\": %d, \"temperature\": %d.%d, \"humidity\": %d.%d, \"earth\": %d, \"rain\": %d }",
+             "{ \"deviceId\": \"SensorA\", \"messageId\": %d, \"temperature\": %d.%d, \"humidity\": %d.%d, \"earth\": %d, \"rain\": %d }",
              messageId,
              wert2, wert3,
              wert0, wert1,
