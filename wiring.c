@@ -15,7 +15,12 @@ int mask_check(int check, int mask)
 }
 
 
-
+/**
+ * Erstellen der Message für die Cloud
+ * @param messageId
+ * @param payload
+ * @return
+ */
 int readMessage(int messageId, char *payload)
 {
     if ( wiringPiSetup() == -1 )

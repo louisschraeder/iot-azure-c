@@ -8,13 +8,18 @@
 #include <linux/i2c-dev.h> // I2C bus definitions
 
 int fd;
-// Note PCF8591 defaults to 0x48!
 int asd_address = 0x48;
 int16_t valEarth;
 int16_t valRain;
 uint8_t writeBuf[3];
 uint8_t readBuf[2];
 
+/**
+ * Auslesen des Rain- und Bodenfeuchtesensors
+ * @param earth
+ * @param rain
+ * @return
+ */
 int readAnalog(int * earth, int * rain) {
     // open device on /dev/i2c-1 the default on Raspberry Pi B
     if ((fd = open("/dev/i2c-1", O_RDWR)) < 0) {
@@ -30,21 +35,13 @@ int readAnalog(int * earth, int * rain) {
 
 
     //------------------------------------------------------------------------------------------------
-    // 0xC2 single shot off
-    // bit 15 flag bit for single shot not used here
-    // Bits 14-12 input selection:
-    // 100 ANC0; 101 ANC1; 110 ANC2; 111 ANC3
-    // Bits 11-9 Amp gain. Default to 010 here 001 P19
-    // Bit 8 Operational mode of the ADS1115.
-    // 0 : Continuous conversion mode
-    // 1 : Power-down single-shot mode (default)
 
     //Configuration
     writeBuf[0] = 1;
     writeBuf[1] = 0b11000010;
     writeBuf[2] = 0b10000101;
 
-    // begin conversion
+    // send Configuration
     if (write(fd, writeBuf, 3) != 3) {
         perror("Write to register 1");
         return -1;
@@ -94,7 +91,7 @@ int readAnalog(int * earth, int * rain) {
         return -1;
     }
 
-    // read conversion register
+    // send Configuration
     if (read(fd, readBuf, 2) != 2) {
         perror("Read conversion");
         return -1;
@@ -124,6 +121,7 @@ int readAnalog(int * earth, int * rain) {
     out_min = 0;
     out_max = 100;
 
+    //Mappen des Sensorwerts Earth
     int valEarthOut = (valEarth - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 
     in_min = 32767;
@@ -131,6 +129,7 @@ int readAnalog(int * earth, int * rain) {
     out_min = 0;
     out_max = 100;
 
+    //Mappen des Sensorwerts Rain
     int valRainOut = (valRain - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 
     //printf("analogEarth Prozent: %d\n", valEarthOut);
